@@ -1,0 +1,18 @@
+{
+  "name": "mongodb",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mongoStart":"nodemon mongodb.js",
+    "mongooseStart":"nodemon mongoose.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9"
+  }
+}
