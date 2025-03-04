@@ -1,24 +1,18 @@
 const express = require('express')
-const { generateNewShortURL, getShortUrlbyId, deleteShortUrlById, getAnalyticsbyShortId } = require('../controllers/url')
+const { generateNewShortURL, deleteShortUrlById, getAllUrls } = require('../controllers/url')
 const router = express.Router();
 
 //Rest API Methods
 
+// api to get all the urls
+router.get('/', getAllUrls)
+
 // api to create new short url
 
-router.post('/', generateNewShortURL)
-
-//get analytics data
-router.post('/:id', getAnalyticsbyShortId)
-
-// api to get the short url with shortId
-
-router.get('/:id', getShortUrlbyId)
+router.post('/new', generateNewShortURL)
 
 // api to delete the short url with id
 
-router.delete('/:id', deleteShortUrlById)
-
-
+router.get('/delete/:id', deleteShortUrlById)
 
 module.exports = router
