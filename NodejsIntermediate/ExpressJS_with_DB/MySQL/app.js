@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const cookiePaser = require("cookie-parser");
 const connection = require('./config/db');
+const session = require('express-session');
 
 // intializing the express app
 const app = express()
@@ -15,13 +16,23 @@ app.set("views", path.resolve("./views"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookiePaser());
 app.use(express.json())
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
 
 //routes
 app.use('/todo', require('./routes/todo.route'))
 
-app.get('/', (req, res) => {
-    // Render the Pug template named 'home' and pass the data
-    res.render('home');
+app.get("/", async (req, res) => {
+    try {
+        const [data] = await connection.query('SELECT * FROM todos');
+        return res.render('home', { todos: data })
+    } catch (error) {
+        console.log(error)
+        res.send({ success: false, message: 'Error while fetching the todos.' })
+    }
 });
 
 app.get('/signup', (req, res) => {

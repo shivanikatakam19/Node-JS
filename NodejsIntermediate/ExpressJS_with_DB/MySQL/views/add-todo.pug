@@ -1,20 +1,16 @@
 html
     link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD' crossorigin='anonymous')
 body
-    include home.pug  
+    include nav.pug  
     div.container.mt-3
-        form(id='todo' action='/add-todo' method='post')
+        form(id='todo' action='/todo/add-new' method='post')
             div.mb-3
-                label.form-label(for='firstName') First Name
-                input#firstName.form-control(type='text' name='firstName' aria-describedby='firstName' required='')
+                label.form-label(for='title') Title
+                input#title.form-control(type='text' name='title' minlength=3 aria-describedby='title' required='')
             div.mb-3
-                label.form-label(for='lastName') Last Name
-                input#lastName.form-control(type='text' name='lastName' aria-describedby='lastName' required='')
-            div.mb-3
-                label.form-label(for='email') Email
-                input#email.form-control(type='email' name='email' required='')
-            div.mb-3
-                label.form-label(for='password') Password
-                input#password.form-control(type='password' name='password' aria-describedby='password' minlength=10 required='')
+                label.form-label(for='isCompleted') Is Completed
+                select#isCompleted.form-control(name='isCompleted' aria-describedby='isCompleted' required='')
+                    option(value='True') True
+                    option(value='False') False
             div.mb-3
                 button.btn.btn-primary(type='submit') Submit

@@ -2,28 +2,40 @@
 
 const connection = require("../config/db")
 
-const getAllTodos = async (req, res) => {
-    try {
-        const data = await connection.query('SELECT * FROM todos');
-        return res.render('all-todos', { todos: data })
-    } catch (error) {
-        console.log(error)
-        res.send({ success: false, message: 'Error while fetching the todos.' })
-    }
-}
-
 const createTodo = async (req, res) => {
-    const { title, isCompleted } = req.body
+    const { title, isCompleted } = req.body;
     if (!title || !isCompleted) {
-        return res.send({ success: false, message: 'Please check the fields you have entered.' })
+        return res.send({ success: false, message: 'Please check the fields you have entered.' });
     }
-    const data = connection.query(`INSERT INTO todos (title, is_completed) values`, [title, isCompleted])
-    if (!data) {
-        return res.status(404).send({ success: false, message: 'Error while creating the todo.' })
-    } else {
-        const allTodos = connection.query('SELECT * FROM todos');
-        return res.render('all-todos', { todos: allTodos })
+    try {
+        const [data] = await connection.query("INSERT INTO todos (title, is_completed) VALUES (?, ?)", [title, isCompleted]);
+        if (data) {
+            return res.redirect('/')
+        } else {
+            console.error('Error while redirecting to home page.', error);
+        }
+    } catch (error) {
+        console.error('Error while creating the todo.', error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error while creating the todo.'
+        });
     }
-}
+};
 
-module.exports = { getAllTodos, createTodo }
+const deleteTodo = async (req, res) => {
+    const id = req.params.id
+    try {
+        const [data] = await connection.query("DELETE FROM todos WHERE id = ?", [id])
+        if (data) {
+            return res.redirect('/')
+        } else {
+            console.error('Error while redirecting to home page.', error);
+        }
+    } catch (error) {
+        console.error("Error deleting todo.", error);
+        res.status(500).send("Error deleting todo");
+    }
+};
+
+module.exports = { createTodo, deleteTodo }

@@ -10,8 +10,8 @@ const connection = mysql.createConnection({
     database: 'todo-list'      // The database you want to connect to
 });
 
-connection.query = util.promisify(connection.query);
+promisedConnection = connection.promise();
 
-module.exports = connection;
+module.exports = promisedConnection;
 
 

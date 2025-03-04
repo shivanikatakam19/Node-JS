@@ -1,18 +1,24 @@
 {
-  "name": "mongodb",
+  "name": "url-shortener",
   "version": "1.0.0",
-  "main": "app.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mongoStart":"nodemon mongodb.js",
-    "mongooseStart":"nodemon mongoose.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "mongodb": "^6.12.0",
-    "mongoose": "^8.9.3",
-    "nodemon": "^3.1.9"
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1",
+    "nanoid": "^5.0.5",
+    "node-localstorage": "^3.0.5",
+    "nodemon": "^3.0.3",
+    "shortid": "^2.2.16",
+    "uuid": "^9.0.1"
   }
 }
